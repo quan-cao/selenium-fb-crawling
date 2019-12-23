@@ -7,3 +7,4 @@ accounts.py
 selenium-fb
 *.exe
 *.code-workspace
+*.bat

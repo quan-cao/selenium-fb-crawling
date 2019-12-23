@@ -130,13 +130,6 @@ def get_old_users():
     oldUsersList = dfOldUsers.id.tolist()
     time.sleep(3600)
 
-# def append_posts(df, spreadsheetId, service):
-#     while not newDfEvent.isSet():
-#         gotNewDf = newDfEvent.wait()
-#         if gotNewDf:
-#             play_with_gsheet(spreadsheetId, 'Sheet1', dataframe=df, method='append', first_time=False, service=service)
-#             newDfEvent.clear()
-
 def append_posts_for_staff(spreadsheetId, service):
     global postsToStaff
     while not newDfEvent.isSet():
@@ -191,7 +184,6 @@ oldUsersThread.start()
 gsheetApiThread.start()
 
 driver = open_browser()
-# driver.set_page_load_timeout(8)
 login_fb(driver, accounts.acc1, accounts.pass1)
 standby()
 
@@ -205,7 +197,7 @@ while True:
             postsToStaff = newPosts[(~newPosts.profile.isin(oldProfilesList)) & (~newPosts.phone.isin(oldUsersList))]
             postsToStaff = assign_staff(postsToStaff.reset_index(drop=True), staffList)
             newDfEvent.set()
-            # push_tele(postsToStaff, accounts.botToken, accounts.teleIdHan)
+            push_tele(postsToStaff, accounts.botToken, accounts.teleIdHan)
         except Exception as err:
             err_text = f"Error: {type(err).__name__}.\n{str(err)}"
             data = {
