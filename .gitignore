@@ -1,0 +1,9 @@
+*.log
+*.json
+*.pickle
+.vscode
+__pycache__
+accounts.py
+selenium-fb
+*.exe
+*.code-workspace
