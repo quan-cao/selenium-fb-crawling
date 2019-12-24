@@ -193,21 +193,21 @@ standby()
 
 while True:
     for groupId in groupIdList:
-        # try:
-        newPosts = get_fb_posts(driver, groupId, kwBlacklist)
-        oldPostsList = play_with_gsheet(spreadsheetIdLog, 'Sheet1', first_time=False, service=service3).post.tolist()
-        newPosts = newPosts[~newPosts.post.isin(oldPostsList)]
-        oldProfilesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!E:E', first_time=False, service=service3).profile.tolist()
-        postsToStaff = newPosts[(~newPosts.profile.isin(oldProfilesList)) & (~newPosts.phone.isin(oldUsersList))]
-        postsToStaff = assign_staff(postsToStaff.reset_index(drop=True), staffList)
-        newDfEvent.set()
-        push_tele(postsToStaff, accounts.botToken, accounts.teleIdHan)
-        # except Exception as err:
-        #     err_text = f"Error: {type(err).__name__}.\n{str(err)}"
-        #     data = {
-        #         'chat_id': '807358017',
-        #         'text': err_text,
-        #         'parse_mode': 'HTML'
-        #     }
-        #     r = requests.post("https://api.telegram.org/bot{token}/sendMessage".format(token=accounts.botToken), data=data)
-        #     continue
+        try:
+            newPosts = get_fb_posts(driver, groupId, kwBlacklist)
+            oldPostsList = play_with_gsheet(spreadsheetIdLog, 'Sheet1', first_time=False, service=service3).post.tolist()
+            newPosts = newPosts[~newPosts.post.isin(oldPostsList)]
+            oldProfilesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!E:E', first_time=False, service=service3).profile.tolist()
+            postsToStaff = newPosts[(~newPosts.profile.isin(oldProfilesList)) & (~newPosts.phone.isin(oldUsersList))]
+            postsToStaff = assign_staff(postsToStaff.reset_index(drop=True), staffList)
+            newDfEvent.set()
+            push_tele(postsToStaff, accounts.botToken, accounts.teleIdHan)
+        except Exception as err:
+            err_text = f"Error: {type(err).__name__}.\n{str(err)}"
+            data = {
+                'chat_id': '807358017',
+                'text': err_text,
+                'parse_mode': 'HTML'
+            }
+            r = requests.post("https://api.telegram.org/bot{token}/sendMessage".format(token=accounts.botToken), data=data)
+            continue
