@@ -162,7 +162,7 @@ newDfEvent = threading.Event()
 
 spreadsheetIdNoti = accounts.spreadsheetIdNoti
 spreadsheetIdLog = accounts.spreadsheetIdLog
-spreadsheetIdHubspot = 
+spreadsheetIdHubspot = accounts.spreadsheetIdHubspot
 
 groupIdList = accounts.groupIdList
 staffList = accounts.staffList
