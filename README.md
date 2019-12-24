@@ -29,9 +29,9 @@ Posts will be simultaneously logged on Google Sheet.
 |84xxxxxx|2019-12-24 14:17:00|ứng 100|https://www.facebook.com/groups/...|https://www.facebook.com/...|@quancao|good|
 
 ## 2.3. Content on Google Sheet for log
-|phone   |time               |content|post                               |profile                     |staff   |note|
-|--------|-------------------|-------|-----------------------------------|----------------------------|--------|----|
-|84xxxxxx|2019-12-24 14:17:00|ứng 100|https://www.facebook.com/groups/...|https://www.facebook.com/...|@quancao|good|
+|phone   |time               |content|post                               |profile                     |
+|--------|-------------------|-------|-----------------------------------|----------------------------|
+|84xxxxxx|2019-12-24 14:17:00|ứng 100|https://www.facebook.com/groups/...|https://www.facebook.com/...|
 
 # UPDATE LOG
 
