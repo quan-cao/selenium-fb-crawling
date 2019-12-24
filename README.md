@@ -1,12 +1,12 @@
 # selenium-fb-crawling
 
 # 1. Background
-An Python program which helps finding customers for AhaMove sales team.
-Automatically look for shipping request posts in pre-defined groups and notify staffs via Telegram.
-Staff will be assign using Telegram Username (Ex: @quancao). Therefore, please make sure all staffs have Username on Telegram.
+An Python program which helps finding customers for AhaMove sales team.<br>
+Automatically look for shipping request posts in pre-defined groups and notify staffs via Telegram.<br>
+Staff will be assign using Telegram Username (Ex: @quancao). Therefore, please make sure all staffs have Username on Telegram.<br>
 Posts will be simultaneously logged on Google Sheet.
 
-**Skills involved:
+**Skills involved:**
 > 1. Python
 > 2. Multi-threading
 > 3. Selenium
