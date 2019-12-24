@@ -16,11 +16,11 @@ Posts will be simultaneously logged on Google Sheet.
 # 2. Content
 ## 2.1. Content on Telegram
 
-> **NEW POST**
-> **Nội dung:** {post_content}
-> **Facebook:** {facebook_profile}
-> **Phone:** {phone_detected_in_content}
-> **Link:** {post_link}
+> **NEW POST** <br>
+> **Nội dung:** {post_content} <br>
+> **Facebook:** {facebook_profile} <br>
+> **Phone:** {phone_detected_in_content} <br>
+> **Link:** {post_link} <br>
 > {staff}
 
 ## 2.2. Content on Google Sheet for staff
