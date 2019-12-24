@@ -24,14 +24,14 @@ Posts will be simultaneously logged on Google Sheet.
 > {staff}
 
 ## 2.2. Content on Google Sheet for staff
-|phone   |time               |content|post                               |profile                          |staff   |note|
-|--------|-------------------|-------|-----------------------------------|---------------------------------|--------|----|
-|84xxxxxx|2019-12-24 14:17:00|ứng 100|https://www.facebook.com/groups/...|https://www.facebook.com/coi.hihe|@quancao|good|
+|phone   |time               |content|post                               |profile                     |staff   |note|
+|--------|-------------------|-------|-----------------------------------|----------------------------|--------|----|
+|84xxxxxx|2019-12-24 14:17:00|ứng 100|https://www.facebook.com/groups/...|https://www.facebook.com/...|@quancao|good|
 
 ## 2.3. Content on Google Sheet for log
-|phone   |time               |content|post                               |profile                          |staff   |note|
-|--------|-------------------|-------|-----------------------------------|---------------------------------|--------|----|
-|84xxxxxx|2019-12-24 14:17:00|ứng 100|https://www.facebook.com/groups/...|https://www.facebook.com/coi.hihe|@quancao|good|
+|phone   |time               |content|post                               |profile                     |staff   |note|
+|--------|-------------------|-------|-----------------------------------|----------------------------|--------|----|
+|84xxxxxx|2019-12-24 14:17:00|ứng 100|https://www.facebook.com/groups/...|https://www.facebook.com/...|@quancao|good|
 
 # UPDATE LOG
 
