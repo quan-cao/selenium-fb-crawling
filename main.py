@@ -126,7 +126,7 @@ def gsheet_connection():
 
 def get_old_users():
     global oldUsersList
-    dfOldUsers = play_with_gsheet('11s7mTZ4KksWKUT5Y8WlDmyIiQsu9hIu3U879H2B5ThI', 'Sheet1', first_time=True)
+    dfOldUsers = play_with_gsheet(accounts.spreadsheetIdHubspot, 'Sheet1', first_time=True)
     oldUsersList = dfOldUsers.id.tolist()
     time.sleep(3600)
 
@@ -160,9 +160,12 @@ def assign_staff(df, staffList):
 
 newDfEvent = threading.Event()
 
-spreadsheetId = '1rNVvb6lGIz7CyQlsUGvpQklSDHaZqOlyrRstUvgHofo'
-groupIdList = [486218274874893, 161573060630334, 418845488302876, 1472259113056599, 1097000400338789]
-staffList = ['@hoangvu2410', '@nguyenvuha', '@vuchan', '@tom9896']
+spreadsheetIdNoti = accounts.spreadsheetIdNoti
+spreadsheetIdLog = accounts.spreadsheetIdLog
+spreadsheetIdHubspot = 
+
+groupIdList = accounts.groupIdList
+staffList = accounts.staffList
 num = 0
 kwBlacklist = ['bắn']
 
@@ -173,8 +176,8 @@ service1 = gsheet_build_service()
 service2 = gsheet_build_service()
 service3 = gsheet_build_service()
 
-staffPostsThread = threading.Thread(target=append_posts_for_staff, args=(spreadsheetId, service1,), name='staffPostsThread')
-logPostsThread = threading.Thread(target=append_posts_for_log, args=('1g8hPGxKWCnzqY9W_Sc3qLCaKecQTrm9jnE1merr4Ae0', service2,), name='logPostsThread')
+staffPostsThread = threading.Thread(target=append_posts_for_staff, args=(spreadsheetIdNoti, service1,), name='staffPostsThread')
+logPostsThread = threading.Thread(target=append_posts_for_log, args=(spreadsheetIdLog, service2,), name='logPostsThread')
 oldUsersThread = threading.Thread(target=get_old_users, name='oldUsersThread')
 gsheetApiThread = threading.Thread(target=gsheet_connection, name='gsheetApiThread')
 
@@ -191,9 +194,9 @@ while True:
     for groupId in groupIdList:
         try:
             newPosts = get_fb_posts(driver, groupId, kwBlacklist)
-            oldPostsList = play_with_gsheet('1g8hPGxKWCnzqY9W_Sc3qLCaKecQTrm9jnE1merr4Ae0', 'Sheet1', first_time=False, service=service3).post.tolist()
+            oldPostsList = play_with_gsheet(spreadsheetIdLog, 'Sheet1', first_time=False, service=service3).post.tolist()
             newPosts = newPosts[~newPosts.post.isin(oldPostsList)]
-            oldProfilesList = play_with_gsheet(spreadsheetId, 'Sheet1!E:E', first_time=False, service=service3).profile.tolist()
+            oldProfilesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!E:E', first_time=False, service=service3).profile.tolist()
             postsToStaff = newPosts[(~newPosts.profile.isin(oldProfilesList)) & (~newPosts.phone.isin(oldUsersList))]
             postsToStaff = assign_staff(postsToStaff.reset_index(drop=True), staffList)
             newDfEvent.set()
