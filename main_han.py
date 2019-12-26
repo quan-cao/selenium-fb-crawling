@@ -139,7 +139,6 @@ def append_posts_for_staff(spreadsheetId, service):
             newDfEvent.clear()
 
 def append_posts_for_log(spreadsheetId, service):
-    newPosts
     while not newDfEvent.isSet():
         gotNewDf = newDfEvent.wait()
         if gotNewDf:
@@ -156,7 +155,6 @@ def assign_staff(df, staffList):
         else: num = 0
     df = pd.concat([df, pd.Series(staffCol, name='staff')], axis=1, ignore_index=True)
     df.columns = ['phone', 'time', 'content', 'post', 'profile', 'staff']
-    df['note'] = ''
     return df
 
 newDfEvent = threading.Event()
