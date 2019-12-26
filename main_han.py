@@ -161,14 +161,17 @@ def assign_staff(df, staffList):
 
 newDfEvent = threading.Event()
 
-spreadsheetIdNoti = accounts.spreadsheetIdNoti
-spreadsheetIdLog = accounts.spreadsheetIdLog
+fb_email = accounts.acc1
+fb_pass = accounts.pass1
+
+spreadsheetIdNoti = accounts.spreadsheetIdNotiHan
+spreadsheetIdLog = accounts.spreadsheetIdLogHan
 spreadsheetIdHubspot = accounts.spreadsheetIdHubspot
 
-groupIdList = accounts.groupIdList
-staffList = accounts.staffList
+groupIdList = accounts.groupIdListHan
+staffList = accounts.staffListHan
 num = 0
-kwBlacklist = ['bắn']
+kwBlacklist = ['bắn', 'mua']
 
 postsToStaff = None
 newPosts = None
@@ -188,7 +191,7 @@ oldUsersThread.start()
 gsheetApiThread.start()
 
 driver = open_browser()
-login_fb(driver, accounts.acc1, accounts.pass1)
+login_fb(driver, fb_email, fb_pass)
 standby()
 
 while True:
