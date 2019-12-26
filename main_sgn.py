@@ -160,15 +160,15 @@ def assign_staff(df, staffList):
 
 newDfEvent = threading.Event()
 
-fb_email = accounts.acc1
-fb_pass = accounts.pass1
+fb_email = accounts.acc2
+fb_pass = accounts.pass2
 
-spreadsheetIdNoti = accounts.spreadsheetIdNotiHan
-spreadsheetIdLog = accounts.spreadsheetIdLogHan
+spreadsheetIdNoti = accounts.spreadsheetIdNotiSgn
+spreadsheetIdLog = accounts.spreadsheetIdLogSgn
 spreadsheetIdHubspot = accounts.spreadsheetIdHubspot
 
-groupIdList = accounts.groupIdListHan
-staffList = accounts.staffListHan
+groupIdList = accounts.groupIdListSgn
+staffList = accounts.staffListSgn
 num = 0
 kwBlacklist = ['bắn', 'mua']
 
@@ -205,13 +205,14 @@ while True:
                                     ((~newPosts.phone.isin(oldUsersList)) | (newPosts.phone.isna()))]
             postsToStaff = assign_staff(postsToStaff.reset_index(drop=True), staffList)
             newDfEvent.set()
-            push_tele(postsToStaff, accounts.botToken, accounts.teleIdHan)
+            push_tele(postsToStaff, accounts.botToken, accounts.teleIdSgn)
         except Exception as err:
-            err_text = f"Error: {type(err).__name__}.\n{str(err)}"
-            data = {
-                'chat_id': '807358017',
-                'text': err_text,
-                'parse_mode': 'HTML'
-            }
-            r = requests.post("https://api.telegram.org/bot{token}/sendMessage".format(token=accounts.botToken), data=data)
+            if type(err).__name__ != 'TimeoutException':
+                err_text = f"Error: {type(err).__name__}.\n{str(err)}"
+                data = {
+                    'chat_id': '807358017',
+                    'text': err_text,
+                    'parse_mode': 'HTML'
+                }
+                r = requests.post("https://api.telegram.org/bot{token}/sendMessage".format(token=accounts.botToken), data=data)
             continue
