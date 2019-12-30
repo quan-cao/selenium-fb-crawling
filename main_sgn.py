@@ -201,7 +201,7 @@ while True:
             oldProfilesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!E:E', first_time=False, service=service3).profile.tolist()
             oldPhonesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!A:A', first_time=False, service=service3).phone.tolist()
             postsToStaff = newPosts[(~newPosts.profile.isin(oldProfilesList)) & (~newPosts.phone.isin(oldPhonesList)) &
-                                    ((~newPosts.phone.isin(oldUsersList)) | (newPosts.phone.isna()))]
+                                    ((~newPosts.phone.isin(oldUsersList)) | (newPosts.phone.isna()))].drop_duplicates(subset='profile')
             postsToStaff = assign_staff(postsToStaff.reset_index(drop=True), staffList)
             newDfEvent.set()
             push_tele(postsToStaff, accounts.botToken, accounts.teleIdSgn)
