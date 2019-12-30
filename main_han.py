@@ -31,7 +31,7 @@ def open_browser():
 
 def login_fb(driver, account, password):
     driver.get('https://facebook.com')
-    standby()
+    standby(3, 5)
     driver.find_element_by_id('email').send_keys(account)
     standby()
     driver.find_element_by_id('pass').send_keys(password)
