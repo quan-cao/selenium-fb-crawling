@@ -33,7 +33,7 @@ Posts will be simultaneously logged on Google Sheet.
 |--------|-------------------|-------|-----------------------------------|----------------------------|
 |84xxxxxx|2019-12-24 14:17:00|ứng 100|https://www.facebook.com/groups/...|https://www.facebook.com/...|
 
-# UPDATE LOG
+# CHANGELOG
 
 ## Verion Beta 1.1:
 - Slightly increase crawling speed.
