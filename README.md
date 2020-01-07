@@ -48,3 +48,6 @@ Posts will be simultaneously logged on Google Sheet.
         - Every profile will only appear once in a day.
     - For log:
         - Keep all posts from AhaMove users and multiple posts from 1 profile.
+
+## Beta 2.1:
+- Posts for staff: Remove none-phone posts for HAN.
