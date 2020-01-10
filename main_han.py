@@ -206,11 +206,16 @@ while True:
             newDfEvent.set()
             push_tele(postsToStaff, accounts.botToken, accounts.teleIdHan)
         except Exception as err:
-            err_text = f"Error: {type(err).__name__}.\n{str(err)}"
-            data = {
-                'chat_id': '807358017',
-                'text': err_text,
-                'parse_mode': 'HTML'
-            }
-            r = requests.post("https://api.telegram.org/bot{token}/sendMessage".format(token=accounts.botToken), data=data)
+            if type(err).__name__ == 'WebDriverException':
+                driver.close()
+                driver = open_browser()
+                login_fb(driver, fb_email, fb_pass)
+            if type(err).__name__ != 'TimeoutException':
+                err_text = f"Error: {type(err).__name__}.\n{str(err)}"
+                data = {
+                    'chat_id': '807358017',
+                    'text': err_text,
+                    'parse_mode': 'HTML'
+                }
+                r = requests.post("https://api.telegram.org/bot{token}/sendMessage".format(token=accounts.botToken), data=data)
             continue

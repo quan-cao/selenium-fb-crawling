@@ -206,6 +206,10 @@ while True:
             newDfEvent.set()
             push_tele(postsToStaff, accounts.botToken, accounts.teleIdSgn)
         except Exception as err:
+            if type(err).__name__ == 'WebDriverException':
+                driver.close()
+                driver = open_browser()
+                login_fb(driver, fb_email, fb_pass)
             if type(err).__name__ != 'TimeoutException':
                 err_text = f"Error: {type(err).__name__}.\n{str(err)}"
                 data = {
