@@ -53,7 +53,7 @@ Posts will be simultaneously logged on Google Sheet.
 - Posts for staff: Notify non-phone posts with hashtag #nophone.
 - Blacklist keywords: mua, cáng, con chó, bàn, tủ, ghế, bắn.
 
-# Version 2.1.1:
+## Version 2.1.1:
 - Append site-package path to sys.path in order to run py file w/o venv.
 - Set end time for script.
 - Handle WebDriverException.
