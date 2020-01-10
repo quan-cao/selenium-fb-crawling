@@ -1,6 +1,10 @@
+import sys
+sys.path.append(sys.path[0]+'\selenium-fb\Lib\site-packages')
+
 import pandas as pd
 import re
 import time
+import datetime
 import threading
 import requests
 import random
@@ -178,10 +182,10 @@ service1 = gsheet_build_service()
 service2 = gsheet_build_service()
 service3 = gsheet_build_service()
 
-staffPostsThread = threading.Thread(target=append_posts_for_staff, args=(spreadsheetIdNoti, service1,), name='staffPostsThread')
-logPostsThread = threading.Thread(target=append_posts_for_log, args=(spreadsheetIdLog, service2,), name='logPostsThread')
-oldUsersThread = threading.Thread(target=get_old_users, name='oldUsersThread')
-gsheetApiThread = threading.Thread(target=gsheet_connection, name='gsheetApiThread')
+staffPostsThread = threading.Thread(target=append_posts_for_staff, args=(spreadsheetIdNoti, service1,), name='staffPostsThread', daemon=True)
+logPostsThread = threading.Thread(target=append_posts_for_log, args=(spreadsheetIdLog, service2,), name='logPostsThread', daemon=True)
+oldUsersThread = threading.Thread(target=get_old_users, name='oldUsersThread', daemon=True)
+gsheetApiThread = threading.Thread(target=gsheet_connection, name='gsheetApiThread', daemon=True)
 
 staffPostsThread.start()
 logPostsThread.start()
@@ -193,6 +197,9 @@ login_fb(driver, fb_email, fb_pass)
 standby()
 
 while True:
+    if datetime.datetime.now().time() >= datetime.time(18, 30) or datetime.datetime.now().time() < datetime.time(9, 30):
+        driver.quit()
+        sys.exit(0)
     for groupId in groupIdList:
         try:
             newPosts = get_fb_posts(driver, groupId, kwBlacklist)
@@ -207,7 +214,9 @@ while True:
             push_tele(postsToStaff, accounts.botToken, accounts.teleIdSgn)
         except Exception as err:
             if type(err).__name__ == 'WebDriverException':
-                driver.close()
+                try:
+                    driver.quit()
+                except: pass
                 driver = open_browser()
                 login_fb(driver, fb_email, fb_pass)
             if type(err).__name__ != 'TimeoutException':
