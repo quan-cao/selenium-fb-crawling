@@ -169,7 +169,8 @@ spreadsheetIdHubspot = accounts.spreadsheetIdHubspot
 groupIdList = accounts.groupIdListHan
 staffList = accounts.staffListHan
 num = 0
-kwBlacklist = ['bắn', 'mua']
+kwBlacklist = ['bắn', 'mua', 'cáng', 'con chó', 'bàn', 'tủ', 'ghế',
+                'ck', 'momo', 'đệm', 'bank', 'banking', 'ck']
 
 postsToStaff = None
 newPosts = None
