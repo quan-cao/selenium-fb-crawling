@@ -35,13 +35,13 @@ Posts will be simultaneously logged on Google Sheet.
 
 # CHANGELOG
 
-## Verion Beta 1.1:
+## Verion Beta 1.0:
 - Slightly increase crawling speed.
 - Simultaneously sync to Google Sheet to take note along side of Telegram notification.
 - Remove duplicated posts within day.
 - Blacklist keyword "bắn"
 
-## Version Beta 2.0:
+## Version 2.0:
 - Separate posts for log and posts for staff. Update posts into 2 different Google Sheets.
     - For staff:
         - Filter AhaMove users.
@@ -49,5 +49,11 @@ Posts will be simultaneously logged on Google Sheet.
     - For log:
         - Keep all posts from AhaMove users and multiple posts from 1 profile.
 
-## Beta 2.1:
-- Posts for staff: Remove none-phone posts for HAN.
+## Version 2.1:
+- Posts for staff: Notify non-phone posts with hashtag #nophone.
+- Blacklist keywords: mua, cáng, con chó, bàn, tủ, ghế, bắn.
+
+# Version 2.1.1:
+- Append site-package path to sys.path in order to run py file w/o venv.
+- Set end time for script.
+- Handle WebDriverException.
