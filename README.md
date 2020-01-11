@@ -52,13 +52,8 @@ Posts will be simultaneously logged on Google Sheet.
     - For log:
         - Keep all posts from AhaMove users and multiple posts from 1 profile.
 
-## Verion 1.0.0:
+## Verion 1.1.0:
 - Slightly increase crawling speed.
 - Simultaneously sync to Google Sheet to take note along side of Telegram notification.
 - Remove duplicated posts within day.
 - Blacklist keyword "bắn"
-
-
-
-
-
