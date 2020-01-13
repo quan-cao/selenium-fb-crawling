@@ -44,5 +44,5 @@ Posts will be simultaneously logged on Google Sheet.
 > **Link:** {post_link} <br>
 > #nophone
 
-## 3. Store posts
+### 2.3. Store posts
 All gathered posts will be stored in format of SQL in order to conduct analytic later on.
