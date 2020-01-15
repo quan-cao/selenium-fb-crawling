@@ -1,3 +1,6 @@
+## Version 2.1.2:
+- Handle Facebook changing login screen.
+
 ## Version 2.1.1:
 - Append site-package path to sys.path in order to run py file w/o venv.
 - Set end time for script.
