@@ -36,12 +36,11 @@ def open_browser():
 def login_fb(driver, account, password):
     driver.get('https://facebook.com')
     standby(3, 5)
-    driver.find_element_by_id('email').send_keys(account)
+    WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, 'email'))).send_keys(account)
     standby()
-    driver.find_element_by_id('pass').send_keys(password)
+    WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.NAME, 'pass'))).send_keys(password)
     standby()
     driver.switch_to.active_element.send_keys(Keys.RETURN)
-
 
 def get_fb_posts(driver, groupId, kwBlacklist):
     if type(kwBlacklist) != 'list':
