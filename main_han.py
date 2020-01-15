@@ -42,7 +42,6 @@ def login_fb(driver, account, password):
     standby()
     driver.switch_to.active_element.send_keys(Keys.RETURN)
 
-
 def get_fb_posts(driver, groupId, kwBlacklist):
     if type(kwBlacklist) != 'list':
         kwBlacklist = list(kwBlacklist)
