@@ -29,6 +29,8 @@ def open_browser():
     options.add_argument("--disable-notifications")
     options.add_argument("--disable-infobars")
     options.add_argument("--mute-audio")
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
 
     driver = webdriver.Chrome(options=options)
     return driver
@@ -212,7 +214,7 @@ while True:
             newDfEvent.set()
             push_tele(postsToStaff, accounts.botToken, accounts.teleIdSgn)
         except Exception as err:
-            if type(err).__name__ == 'WebDriverException':
+            if type(err).__name__ in ['WebDriverException', 'NoSuchWindowException']:
                 try:
                     driver.quit()
                 except: pass
