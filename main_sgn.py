@@ -5,7 +5,7 @@ import pandas as pd
 import re
 import time
 import datetime
-import threading
+import schedule
 import requests
 import random
 from gsheetApi import play_with_gsheet, gsheet_build_service
@@ -120,35 +120,14 @@ def push_tele(df, botToken, teleId):
         except:
             pass
 
-def gsheet_connection():
-    global service1
-    global service2
-    global service3
-    time.sleep(3600)
-    service1 = gsheet_build_service()
-    service2 = gsheet_build_service()
-    service3 = gsheet_build_service()
-
 def get_old_users():
     global oldUsersList
     dfOldUsers = play_with_gsheet(accounts.spreadsheetIdHubspot, 'Sheet1', first_time=True)
     oldUsersList = dfOldUsers.id.tolist()
-    time.sleep(3600)
+    return oldUsersList
 
-def append_posts_for_staff(spreadsheetId, service):
-    global postsToStaff
-    while not newDfEvent.isSet():
-        gotNewDf = newDfEvent.wait()
-        if gotNewDf:
-            play_with_gsheet(spreadsheetId, 'Sheet1', dataframe=postsToStaff, method='append', first_time=False, service=service)
-            newDfEvent.clear()
-
-def append_posts_for_log(spreadsheetId, service):
-    while not newDfEvent.isSet():
-        gotNewDf = newDfEvent.wait()
-        if gotNewDf:
-            play_with_gsheet(spreadsheetId, 'Sheet1', dataframe=newPosts, method='append', first_time=False, service=service)
-            newDfEvent.clear()
+def append_posts(spreadsheetId, df, service):
+    play_with_gsheet(spreadsheetId, 'Sheet1', dataframe=df, method='append', first_time=False, service=service)
 
 def assign_staff(df, staffList):
     global num
@@ -162,7 +141,6 @@ def assign_staff(df, staffList):
     df.columns = ['phone', 'time', 'content', 'post', 'profile', 'staff']
     return df
 
-newDfEvent = threading.Event()
 
 fb_email = accounts.acc2
 fb_pass = accounts.pass2
@@ -176,22 +154,8 @@ staffList = accounts.staffListSgn
 num = 0
 kwBlacklist = ['bắn', 'mua']
 
-postsToStaff = None
-newPosts = None
-
-service1 = gsheet_build_service()
-service2 = gsheet_build_service()
-service3 = gsheet_build_service()
-
-staffPostsThread = threading.Thread(target=append_posts_for_staff, args=(spreadsheetIdNoti, service1,), name='staffPostsThread', daemon=True)
-logPostsThread = threading.Thread(target=append_posts_for_log, args=(spreadsheetIdLog, service2,), name='logPostsThread', daemon=True)
-oldUsersThread = threading.Thread(target=get_old_users, name='oldUsersThread', daemon=True)
-gsheetApiThread = threading.Thread(target=gsheet_connection, name='gsheetApiThread', daemon=True)
-
-staffPostsThread.start()
-logPostsThread.start()
-oldUsersThread.start()
-gsheetApiThread.start()
+oldUsersList = get_old_users()
+schedule.every(30).minutes.do(get_old_users)
 
 driver = open_browser()
 login_fb(driver, fb_email, fb_pass)
@@ -203,16 +167,19 @@ while True:
         sys.exit(0)
     for groupId in groupIdList:
         try:
+            schedule.run_pending()
+            service = gsheet_build_service()
             newPosts = get_fb_posts(driver, groupId, kwBlacklist)
-            oldPostsList = play_with_gsheet(spreadsheetIdLog, 'Sheet1', first_time=False, service=service3).post.tolist()
+            oldPostsList = play_with_gsheet(spreadsheetIdLog, 'Sheet1', first_time=False, service=service).post.tolist()
             newPosts = newPosts[~newPosts.post.isin(oldPostsList)]
-            oldProfilesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!E:E', first_time=False, service=service3).profile.tolist()
-            oldPhonesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!A:A', first_time=False, service=service3).phone.tolist()
+            oldProfilesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!E:E', first_time=False, service=service).profile.tolist()
+            oldPhonesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!A:A', first_time=False, service=service).phone.tolist()
             postsToStaff = newPosts[(~newPosts.profile.isin(oldProfilesList)) & (~newPosts.phone.isin(oldPhonesList)) &
                                     ((~newPosts.phone.isin(oldUsersList)) | (newPosts.phone.isna()))].drop_duplicates(subset='profile')
             postsToStaff = assign_staff(postsToStaff.reset_index(drop=True), staffList)
-            newDfEvent.set()
+            append_posts(accounts.spreadsheetIdNotiSgn, postsToStaff, service)
             push_tele(postsToStaff, accounts.botToken, accounts.teleIdSgn)
+            append_posts(accounts.spreadsheetIdLogSgn, newPosts, service)
         except Exception as err:
             if type(err).__name__ in ['WebDriverException', 'NoSuchWindowException']:
                 try:
@@ -221,7 +188,7 @@ while True:
                 driver = open_browser()
                 login_fb(driver, fb_email, fb_pass)
             if type(err).__name__ != 'TimeoutException':
-                err_text = f"Error: {type(err).__name__}.\n{str(err)}"
+                err_text = f"SGN Error: {type(err).__name__}.\n{str(err)}"
                 data = {
                     'chat_id': '807358017',
                     'text': err_text,

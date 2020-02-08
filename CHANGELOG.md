@@ -1,3 +1,6 @@
+## Version 2.1.3:
+- Storing posts and pushing Telegam messages are now executed consecutively instead of simultaneously.
+
 ## Version 2.1.2:
 - Handle Facebook changing login screen.
 
@@ -7,7 +10,6 @@
 - Handle WebDriverException.
 
 ## Version 2.1.0:
-- Posts for staff: Notify non-phone posts with hashtag #nophone.
 - Blacklist keywords: mua, cáng, con chó, bàn, tủ, ghế, bắn.
 
 ## Version 2.0.0:
