@@ -1,4 +1,4 @@
-## Version 2.1.3:
+## Version 2.2.0:
 - Storing posts and pushing Telegam messages are now executed consecutively instead of simultaneously.
 
 ## Version 2.1.2:
