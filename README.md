@@ -45,4 +45,4 @@ Posts will be simultaneously logged on Google Sheet.
 > #nophone
 
 ### 2.3. Store posts
-All gathered posts will be stored in format of SQL in order to conduct analytic later on.
+All gathered posts will be stored in database for analytics later on.
