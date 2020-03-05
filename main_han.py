@@ -83,7 +83,7 @@ def get_fb_posts(driver, groupId, kwBlacklist):
                 except:
                     break
 
-                post_time = pd.to_datetime(p.find_element_by_class_name('_5ptz').get_attribute('title'), format='%H:%M, %d/%m/%Y')
+                post_time = pd.to_datetime(p.find_element_by_class_name('_5ptz').get_attribute('data-utime'), unit='s')
 
                 dataframe = dataframe.append({'phone':phone, 'time':post_time, 'content':content,
                                               'post':post, 'profile':profile}, ignore_index=True)

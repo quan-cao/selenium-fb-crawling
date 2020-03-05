@@ -1,3 +1,6 @@
+## Version 2.2.1:
+- Handle Facebook changed post's timestamp's title attribute.
+
 ## Version 2.2.0:
 - Storing posts and pushing Telegam messages are now executed consecutively instead of simultaneously.
 
