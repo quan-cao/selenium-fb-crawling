@@ -83,7 +83,7 @@ def get_fb_posts(driver, groupId, kwBlacklist):
                 except:
                     break
 
-                post_time = pd.to_datetime(p.find_element_by_class_name('_5ptz').get_attribute('data-utime'), unit='s')
+                post_time = pd.to_datetime(p.find_element_by_class_name('_5ptz').get_attribute('data-utime'), unit='s') + pd.DateOffset(hour=16)
 
                 dataframe = dataframe.append({'phone':phone, 'time':post_time, 'content':content,
                                               'post':post, 'profile':profile}, ignore_index=True)
@@ -123,7 +123,7 @@ def push_tele(df, botToken, teleId):
 def get_old_users():
     global oldUsersList
     dfOldUsers = play_with_gsheet(accounts.spreadsheetIdHubspot, 'Sheet1', first_time=True)
-    oldUsersList = dfOldUsers.id.tolist()
+    oldUsersList = dfOldUsers.id
     return oldUsersList
 
 def append_posts(spreadsheetId, df, service):
@@ -162,7 +162,7 @@ login_fb(driver, fb_email, fb_pass)
 standby()
 
 while True:
-    if datetime.datetime.now().time() >= datetime.time(18, 30) or datetime.datetime.now().time() < datetime.time(9, 30):
+    if datetime.datetime.now().time() >= datetime.time(18, 30) or datetime.datetime.now().time() < datetime.time(9, 29):
         driver.quit()
         sys.exit(0)
     for groupId in groupIdList:
@@ -170,10 +170,11 @@ while True:
             schedule.run_pending()
             service = gsheet_build_service()
             newPosts = get_fb_posts(driver, groupId, kwBlacklist)
-            oldPostsList = play_with_gsheet(spreadsheetIdLog, 'Sheet1', first_time=False, service=service).post.tolist()
+            oldPostsList = play_with_gsheet(spreadsheetIdLog, 'Sheet1', first_time=False, service=service).post
             newPosts = newPosts[~newPosts.post.isin(oldPostsList)]
-            oldProfilesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!E:E', first_time=False, service=service).profile.tolist()
-            oldPhonesList = play_with_gsheet(spreadsheetIdNoti, 'Sheet1!A:A', first_time=False, service=service).phone.tolist()
+            inDayPosts = play_with_gsheet(spreadsheetIdNoti, 'Sheet1', first_time=False, service=service)
+            oldProfilesList = inDayPosts.profile
+            oldPhonesList = inDayPosts.phone
             postsToStaff = newPosts[(~newPosts.profile.isin(oldProfilesList)) & (~newPosts.phone.isin(oldPhonesList)) &
                                     (~newPosts.phone.isin(oldUsersList))].drop_duplicates(subset='profile')
             postsToStaff = assign_staff(postsToStaff.reset_index(drop=True), staffList)
@@ -188,7 +189,7 @@ while True:
                 driver = open_browser()
                 login_fb(driver, fb_email, fb_pass)
             if type(err).__name__ != 'TimeoutException':
-                err_text = f"Error: {type(err).__name__}.\n{str(err)}"
+                err_text = f"HAN Error: {type(err).__name__}.\n{str(err)}"
                 data = {
                     'chat_id': '807358017',
                     'text': err_text,
