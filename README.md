@@ -8,11 +8,10 @@ Posts will be simultaneously logged on Google Sheet.
 
 **Skills involved:**
 > 1. Python
-> 2. Multi-threading
-> 3. Selenium
-> 4. Google Sheet API
-> 5. Telegram API
-> 6. SQL
+> 2. Selenium
+> 3. Google Sheet API
+> 4. Telegram API
+> 5. SQL
 
 ## 2. WHAT THIS DOES
 ### 2.1. Notify shipping request posts from non-ahamove users
